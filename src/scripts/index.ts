@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { BoxGeometry, MeshBasicMaterial } from "three";
 import { OrbitControls } from "three-orbitcontrols-ts";
 
 (function (): void {
