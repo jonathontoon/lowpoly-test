@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from "three-orbitcontrols-ts";
 
 (function (): void {
 
@@ -31,14 +30,10 @@ import { OrbitControls } from "three-orbitcontrols-ts";
 
 	const RESOLUTION: number = 10;
 
-	let isInteracting: boolean = false;
-
 	let rootElement: HTMLDivElement;
 
 	let camera: THREE.PerspectiveCamera;
 	let dummyCamera: THREE.OrthographicCamera;
-
-	let controls: OrbitControls;
 
 	let scene: THREE.Scene;
 	let dummyScene: THREE.Scene;
@@ -166,17 +161,6 @@ import { OrbitControls } from "three-orbitcontrols-ts";
 		renderer.autoClear = false;
 
 		rootElement.appendChild( renderer.domElement );
-
-		controls = new OrbitControls(camera, renderer.domElement);
-		controls.enableZoom = true;
-		controls.addEventListener("start", () => {
-			isInteracting = true;
-		});
-
-		controls.addEventListener("end", () => {
-			isInteracting = false;
-		});
-		// camera.position.set(0, 20, 100);
 	};
 
 	/*
