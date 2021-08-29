@@ -50,7 +50,6 @@
     const postcss = require("gulp-postcss");
     const autoprefixer = require("autoprefixer");
     const cssnano = require("cssnano");
-    const purgecss = require("@fullhuman/postcss-purgecss");
     
     // BrowserSync
     const browserSync = require("browser-sync").create();
@@ -128,12 +127,6 @@
                 removeAll: true
               }
             }]
-          }),
-          purgecss({
-            content: [paths.html.purge],
-            fontFace: true,
-            keyframes: true,
-            variables: true
           })
         ]))
         .pipe(concat("bundle.min.css"))

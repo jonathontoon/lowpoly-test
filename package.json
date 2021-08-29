@@ -22,6 +22,7 @@
     "main": "gulpfile.js",
     "devDependencies": {
         "@fullhuman/postcss-purgecss": "^3.0.0",
+        "@types/three": "^0.131.0",
         "@typescript-eslint/eslint-plugin": "^4.22.1",
         "@typescript-eslint/parser": "^4.22.1",
         "autoprefixer": "^10.0.1",
@@ -51,5 +52,8 @@
         "start": "yarn dev",
         "lint": "eslint ./src/scripts --ext .ts"
     },
-    "dependencies": {}
+    "dependencies": {
+        "three": "^0.132.2",
+        "three-orbitcontrols-ts": "^0.1.2"
+    }
 }
