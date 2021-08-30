@@ -20,8 +20,8 @@ class RubiksCube {
 	};
 
 	private generateMeshes(): void {
-		const start: number = ((this.size - 1) / 2) * -1;
-		const end: number = ((this.size - 1) / 2);
+		const start: number = Math.floor(this.size) / 2 * -1;
+		const end: number = Math.floor(this.size) / 2;
 
 		for (let x = start; x <= end; x++) {
 			for (let y = start; y <= end; y++) {
@@ -36,7 +36,7 @@ class RubiksCube {
 
 		this.object.position.set(-0.5*(this.size+this.spacing*this.size-2), -0.5*(this.size+this.spacing*this.size-2), -0.5*(this.size+this.spacing*this.size-2));
 		this.object.rotation.set(0,0,0);
-		this.object.scale.set(60, 60, 60);
+		this.object.scale.set(50, 50, 50);
 	};
 
 	public addToScene(scene: Scene): void {
