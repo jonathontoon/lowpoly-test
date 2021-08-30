@@ -7,9 +7,9 @@ import * as THREE from "three";
 	*/
 
 	const CUBE_SIZE: number = 3;
-	const CUBE_SPACING: number = 0;
+	const CUBE_SPACING: number = 0.1;
 	const CUBE_COLORS: string[] = ["#8CF4FF", "#437632", "#593C2C", "#707070", "#F43314"];
-
+	
 	const V_SHADER: string = `
 		varying vec2 vUv;
 
@@ -28,7 +28,7 @@ import * as THREE from "three";
 		}
 	`;
 
-	const RESOLUTION: number = 10;
+	const RESOLUTION: number = 8;
 
 	let rootElement: HTMLDivElement;
 
@@ -61,13 +61,10 @@ import * as THREE from "three";
 		camera.lookAt(scene.position);
 		light.position.copy(camera.position);
 
-		if (isInteracting === false) {
-			cubeObject.rotation.x += 0.005;
-			cubeObject.rotation.y += 0.005;
-			cubeObject.rotation.z += 0.01;
-		}
+		cubeObject.rotation.x += 0.005;
+		cubeObject.rotation.y += 0.005;
+		cubeObject.rotation.z += 0.01;
 
-		controls.update();
 		renderer.setRenderTarget(renderTarget);
 		renderer.clear();
 		renderer.render(scene, camera);
@@ -116,13 +113,23 @@ import * as THREE from "three";
 
 		cubeObject = new THREE.Object3D();
 
-		for (let x = 0; x < CUBE_SIZE; x++) {
-			for (let y = 0; y < CUBE_SIZE; y++) {
-				for (let z = 0; z < CUBE_SIZE; z++) {
+		const CUBE_START: number = ((CUBE_SIZE - 1) / 2) * -1;
+		const CUBE_END: number = ((CUBE_SIZE - 1) / 2);
+
+		console.log(CUBE_START, CUBE_END);
+
+		const colours = [0xC41E3A, 0x009E60, 0x0051BA, 0xFF5800, 0xFFD500, 0xFFFFFF];
+		const faceMaterials = colours.map((c) => {
+			return new THREE.MeshLambertMaterial({ color: c });
+		});
+		
+		for (let x = CUBE_START; x <= CUBE_END; x++) {
+			for (let y = CUBE_START; y <= CUBE_END; y++) {
+				for (let z = CUBE_START; z <= CUBE_END; z++) {
 					const box: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1);
-					const cubeColor: string = CUBE_COLORS[Math.floor(Math.random()*CUBE_COLORS.length)];
-					const material: THREE.MeshLambertMaterial = new THREE.MeshLambertMaterial({ color: cubeColor });
-					const mesh: THREE.Mesh = new THREE.Mesh(box, material);
+					// const cubeColor: string = CUBE_COLORS[Math.floor(Math.random()*CUBE_COLORS.length)];
+					// const material: THREE.MeshLambertMaterial = new THREE.MeshLambertMaterial({ color: cubeColor });
+					const mesh: THREE.Mesh = new THREE.Mesh(box, faceMaterials);
 					mesh.position.set(x+x*CUBE_SPACING, y+y*CUBE_SPACING, z+z*CUBE_SPACING);
 					cubeObject.add(mesh);
 				}
@@ -131,8 +138,7 @@ import * as THREE from "three";
  
 		cubeObject.position.set(-0.5*(CUBE_SIZE+CUBE_SPACING*CUBE_SIZE-2), -0.5*(CUBE_SIZE+CUBE_SPACING*CUBE_SIZE-2), -0.5*(CUBE_SIZE+CUBE_SPACING*CUBE_SIZE-2));
 		cubeObject.rotation.set(0,0,0);
-		cubeObject.receiveShadow = true;
-		cubeObject.scale.set(50, 50, 50);
+		cubeObject.scale.set(60, 60, 60);
 		scene.add(cubeObject);
 
 		light = new THREE.DirectionalLight("#FFFFFF", 2);

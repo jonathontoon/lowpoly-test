@@ -5118,22 +5118,10 @@ tfunk@^3.0.1:
     chalk "^1.1.1"
     object-path "^0.9.0"
 
-three-orbitcontrols-ts@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/three-orbitcontrols-ts/-/three-orbitcontrols-ts-0.1.2.tgz#2040955904022ae19c2e9c52ffdff43168658abd"
-  integrity sha1-IECVWQQCKuGcLpxS/9/0MWhlir0=
-  dependencies:
-    three "^0.83.0"
-
 three@^0.132.2:
   version "0.132.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.132.2.tgz#95eb1856147237c03e887cbbe56f964b6fb40b5e"
   integrity sha512-0wcR7LxxkXMn6Gi58gEs3QvY8WpTVXA31L2VOvpjm4ZPYFRHCZC13UqynheFoS5OXDYgtBneN0dhbaNBE8iLhQ==
-
-three@^0.83.0:
-  version "0.83.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.83.0.tgz#3b7f94790af3e021dac1f44a2617569ca2032b0b"
-  integrity sha1-O3+UeQrz4CHawfRKJhdWnKIDKws=
 
 through2-filter@^3.0.0:
   version "3.0.0"
