@@ -43,11 +43,11 @@ class RubiksCube {
 		scene.add(this.object);
 	};
 
-	public setRotation(x: number, y: number, z: number): void {
-		this.object.rotation.x += x;
-		this.object.rotation.y += y;
-		this.object.rotation.z += z;
-	};
+	// public setRotation(x: number, y: number, z: number): void {
+	// 	this.object.rotation.x += x;
+	// 	this.object.rotation.y += y;
+	// 	this.object.rotation.z += z;
+	// };
 };
 
 export default RubiksCube;

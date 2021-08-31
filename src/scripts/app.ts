@@ -1,4 +1,5 @@
 import { DirectionalLight, OrthographicCamera, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { Key } from "./enums";
 
 import RubiksCube from "./rubikscube";
 import TexturedPlane from "./texturedplane";
@@ -22,8 +23,9 @@ class App {
 	constructor() {
 		this.rootElement = document.querySelector("#root") as HTMLDivElement;
 		
-		this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.position.z = 600;
+		this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+		this.camera.position.y = 80;
+		this.camera.position.z = 500;
 
 		this.dummyCamera = new OrthographicCamera(window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 10000, 10000);
 		this.dummyCamera.position.z = 1;
@@ -38,11 +40,14 @@ class App {
 		});
 
 		this.rubikscube.addToScene(this.scene);
+		this.rubikscube.object.rotation.x = -0.8;
+		this.rubikscube.object.rotation.y = 0.8;
+		this.rubikscube.object.rotation.z = 0;
 
 		this.light = new DirectionalLight("#FFFFFF", 2);
 		this.light.castShadow = true;
 		this.light.target = this.rubikscube.object;
-		this.light.position.set(10, 10, 10);
+		this.light.position.set(0, 0, 0);
 		this.scene.add(this.light);
 
 		this.texturedPlane = new TexturedPlane({ width: window.innerWidth, height: window.innerHeight, resolution: 8 });
@@ -50,7 +55,7 @@ class App {
 
 		this.renderer = new WebGLRenderer();
 		this.renderer.setPixelRatio(window.devicePixelRatio);
-		this.renderer.setClearColor("#ffffff");
+		this.renderer.setClearColor("#dddddd");
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.renderer.autoClear = false;
 		this.rootElement.appendChild(this.renderer.domElement);
@@ -58,7 +63,10 @@ class App {
 		this.handleOnResize = this.handleOnResize.bind(this);
 		this.handleRequestAnimationFrame = this.handleRequestAnimationFrame.bind(this);
 
+		this.handleOnKeyUp = this.handleOnKeyUp.bind(this);
+
 		window.addEventListener("resize", this.handleOnResize, false);
+		window.addEventListener("keyup", this.handleOnKeyUp, false);
 		window.requestAnimationFrame(this.handleRequestAnimationFrame);
 	};
 
@@ -77,6 +85,33 @@ class App {
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 	};
 
+	private handleOnKeyUp(event: KeyboardEvent): void {
+		const keyboardEvent: KeyboardEvent = event as KeyboardEvent;
+		const key: Key | undefined = Key[keyboardEvent.code as keyof typeof Key];
+		
+		switch (key) {
+			case "ArrowLeft": {
+				this.rubikscube.object.rotation.y += -0.4;
+				break;
+			}
+			case "ArrowDown": {
+				this.rubikscube.object.rotation.x += 0.4;
+				break;
+			}
+			case "ArrowRight": {
+				this.rubikscube.object.rotation.y += 0.4;
+				break;
+			}
+			case "ArrowUp": {
+				this.rubikscube.object.rotation.x += -0.4;
+				break;
+			}
+			default: {
+				break;
+			}
+		};
+	};
+
 	private handleRequestAnimationFrame(): void {
 		const canvas: HTMLCanvasElement = this.renderer.domElement;
 		this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -84,7 +119,6 @@ class App {
 		this.camera.lookAt(this.scene.position);
 		this.light.position.copy(this.camera.position);
 
-		this.rubikscube.setRotation(0.005, 0.005, 0.01);
 		this.texturedPlane.addToRenderer(this.renderer);
 
 		this.renderer.clear();
